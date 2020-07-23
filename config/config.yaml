@@ -1,0 +1,18 @@
+keys:
+  app_token: YOUR_TOKEN
+  app_secret: YOUR_SECRET
+  access_token: YOUR_ACCESS_TOKEN
+  access_token_secret: YOUR_ACCESS_TOKEN_SECRET
+
+url:
+  base_url: https://api.cardmarket.com/ws/v2.0/output.json
+
+countries:
+  country_1: AT
+  country_2: D
+
+colors:
+  red : "\e[0;31;40m"
+  yellow : "\e[0;33;40m"
+  green : "\e[0;32;40m"
+  neutral : "\e[0m"
