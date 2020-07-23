@@ -1,7 +1,7 @@
 # MKM Inventory Tool
 
 ## Overview
-I created this tool for myself to keep track of sealed mtg products i bought. It queues the MKM V2 API to fetch current prices for a given inventory file (and configured countries). The output is the formatted and printed as Pretty Table to stdout. 
+I created this tool for myself to keep track of sealed mtg products i bought. It queues the MKM V2 API to fetch current prices for a given inventory file (and configured countries). The formatted output is printed as Pretty Table (ASCII) to stdout. 
 
 This is a sample output showing prices for three regions (Austria, Germany, International):
 
