@@ -1,6 +1,7 @@
 from requests_oauthlib import OAuth1Session
 from prettytable import PrettyTable
 from json import loads
+from colorama import init,deinit
 import ruamel.yaml
 
 path_to_inventory = "config/inventory.yaml"
@@ -13,6 +14,10 @@ def create_session(url, app_token, app_secret, access_token, access_token_secret
 
     return OAuth1Session(app_token, client_secret=app_secret, resource_owner_key=access_token, resource_owner_secret=access_token_secret, realm=url)
 
+def print_header():
+    print("+------------------------------------------------------------------------------------------------------------------------------------------------------+")
+    print("+                                                                 MTG Inventory Tool                                                                   +")
+    print("+------------------------------------------------------------------------------------------------------------------------------------------------------+")
 
 def get_lowest_price(url, session, country, language, api):
     """Fetches the lowest price for a specific country and the given product language"""
@@ -60,7 +65,7 @@ def calculate_product_value(stock_data):
 
 
 def print_summary(data, config, country):
-    """Prints a country specific summary as Pretty Table"""
+    """Prints a country specific summary as formated Pretty Table"""
 
     total_expense = 0
     total_stock = 0
@@ -114,12 +119,12 @@ def load_yaml(path):
 
 
 def main():
-
+    init()
     config = load_yaml(path_to_config)
     inventory = load_yaml(path_to_inventory)
     api = load_yaml(path_to_api)
+    print_header()
 
-    data_country = dict()
     for country_number, country_name in config["countries"].items():
         data_country = dict()
         for name, stock_data in inventory.items():
@@ -146,6 +151,9 @@ def main():
             stock_data)
         data_international[name] = stock_data
     print_summary(data_international, config, "International")
+    deinit()
+    print("\n Press any key to exit.")
+    input()
 
 
 if __name__ == "__main__":

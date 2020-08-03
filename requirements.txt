@@ -2,3 +2,4 @@ requests-oauthlib
 PTable
 simplejson
 ruamel.yaml
+colorma

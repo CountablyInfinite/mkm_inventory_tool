@@ -9,9 +9,10 @@ This is a sample output showing prices for three regions (Austria, Germany, Inte
 
 ## Requirements
 * requests_oauthlib
-* prettytable
+* PTable
 * json
 * ruamel.yaml
+* colorama
 
 `pip install -r requirements.txt`
 
