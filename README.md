@@ -18,14 +18,16 @@ This is a sample output showing prices for three regions (Austria, Germany, Inte
 
 ## Prerequisite
 
-* Add your MKM access secrets and tokens to config.yaml
-* Configure the countries to fetch the prices from in config.yaml
+* Add your MKM access secrets and tokens to config.yaml (You can find them when logged into your cardmarket account: Accountname -> Account -> API Settings)
+* Configure the desired countries to fetch the prices from in config.yaml
 * Remove sample stock and add your stock to inventory.yaml
   * You'll need to enter the MKM product id for every product you want to track. An easy way to locate the product id is to look at the product picture at the MKM Website. The filename represents the product id.
 
 ## Usage
 
 `python3 mkm_inventory_tool.py`
+
+or run mkm_inventory_tool.exe
 
 ## Disclaimer
 
