@@ -30,7 +30,7 @@ def get_lowest_price(url, session, country, language, api):
         json_response = loads(r.content)
         for item in json_response["article"]:
             if item["seller"]["address"]["country"] == country:
-                prices.append(item["priceEUR"])
+                prices.append(item["price"])
         prices.sort()
         try:
             return round(prices[0], 2)
@@ -41,8 +41,7 @@ def get_lowest_price(url, session, country, language, api):
         r = session.get(url, params=params)
         json_response = loads(r.content)
         for item in json_response["article"]:
-            if item["seller"]["address"]:
-                prices.append(item["priceEUR"])
+            prices.append(item["price"])
         prices.sort()
         try:
             return round(prices[0], 2)
