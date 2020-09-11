@@ -1,6 +1,6 @@
 from requests_oauthlib import OAuth1Session
 from prettytable import PrettyTable
-from json import loads
+from json import loads, JSONDecodeError
 from colorama import init,deinit
 import ruamel.yaml
 
@@ -27,7 +27,10 @@ def get_lowest_price(url, session, country, language, api):
     if country:
         params = {'idLanguage': language_id}
         r = session.get(url, params=params)
-        json_response = loads(r.content)
+        try:
+            json_response = loads(r.content)
+        except JSONDecodeError:
+            return "NA"
         for item in json_response["article"]:
             if item["seller"]["address"]["country"] == country:
                 prices.append(item["price"])
@@ -39,7 +42,10 @@ def get_lowest_price(url, session, country, language, api):
     else:
         params = {'idLanguage': language_id}
         r = session.get(url, params=params)
-        json_response = loads(r.content)
+        try:
+            json_response = loads(r.content)
+        except JSONDecodeError:
+            return "NA"
         for item in json_response["article"]:
             prices.append(item["price"])
         prices.sort()
