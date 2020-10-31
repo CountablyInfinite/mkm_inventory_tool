@@ -1,7 +1,7 @@
 from requests_oauthlib import OAuth1Session
 from prettytable import PrettyTable
 from json import loads, JSONDecodeError
-from colorama import init,deinit
+from colorama import init, deinit
 import ruamel.yaml
 
 path_to_inventory = "config/inventory.yaml"
@@ -14,10 +14,12 @@ def create_session(url, app_token, app_secret, access_token, access_token_secret
 
     return OAuth1Session(app_token, client_secret=app_secret, resource_owner_key=access_token, resource_owner_secret=access_token_secret, realm=url)
 
+
 def print_header():
-    print("+------------------------------------------------------------------------------------------------------------------------------------------------------+")
-    print("+                                                                 MTG Inventory Tool                                                                   +")
-    print("+------------------------------------------------------------------------------------------------------------------------------------------------------+")
+    print("+-------------------------------------------------------------------------------------------------------------------------------------------------------+")
+    print("+                                                                 MTG Inventory Tool                                                                    +")
+    print("+-------------------------------------------------------------------------------------------------------------------------------------------------------+")
+
 
 def get_lowest_price(url, session, country, language, api):
     """Fetches the lowest price for a specific country and the given product language"""
@@ -72,6 +74,8 @@ def calculate_product_value(stock_data):
 def print_summary(data, config, country):
     """Prints a country specific summary as formated Pretty Table"""
 
+    if country == None:
+        country = "International"
     total_expense = 0
     total_stock = 0
     total_value = 0
@@ -122,17 +126,29 @@ def load_yaml(path):
         yaml_content = yaml.load(fpi)
     return yaml_content
 
-
-def main():
+def initialize():
     init()
     config = load_yaml(path_to_config)
     inventory = load_yaml(path_to_inventory)
     api = load_yaml(path_to_api)
     print_header()
+    return config, inventory, api
 
+def finalize():
+    deinit()
+    print("\n Press any key to exit.")
+    input()
+    exit(0)
+
+def main():
+    config, inventory, api = initialize()
     for country_number, country_name in config["countries"].items():
         data_country = dict()
         for name, stock_data in inventory.items():
+            if (country_name == "ALL"):
+                country_name = None
+            elif (country_name == 0):
+                finalize()
             url = '{}/articles/{}'.format(config["url"]
                                           ["base_url"], stock_data["article_id"])
             session = create_session(url, config["keys"]["app_token"], config["keys"]["app_secret"],
@@ -144,21 +160,8 @@ def main():
             data_country[name] = stock_data
         print_summary(data_country, config, country_name)
         print("")
-    data_international = dict()
-    for name, stock_data in inventory.items():
-        url = '{}/articles/{}'.format(config["url"]
-                                      ["base_url"], stock_data["article_id"])
-        session = create_session(url, config["keys"]["app_token"], config["keys"]["app_secret"],
-                                 config["keys"]["access_token"], config["keys"]["access_token_secret"])
-        stock_data["lowest_price"] = get_lowest_price(
-            url, session, None, stock_data["language"], api)
-        stock_data["expense"], stock_data["current_total_product_value"], stock_data["absolute_gain"], stock_data["percentage_gain"] = calculate_product_value(
-            stock_data)
-        data_international[name] = stock_data
-    print_summary(data_international, config, "International")
-    deinit()
-    print("\n Press any key to exit.")
-    input()
+    finalize()
+
 
 
 if __name__ == "__main__":

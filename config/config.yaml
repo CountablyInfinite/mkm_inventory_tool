@@ -10,6 +10,7 @@ url:
 countries:
   country_1: AT
   country_2: D
+  country_3: ALL
 
 colors:
   red : "\e[0;31;40m"
