@@ -1,3 +1,6 @@
+***
+# 06.05.2021: IMPORTANT: MKM/MCM shut down their API for private users until further notice after their recent outages. Once MKM/MCM releases their new APIv3 I will publish an update to get mkm_inventory_tool running again.
+***
 # MKM Inventory Tool
 
 ## Overview
